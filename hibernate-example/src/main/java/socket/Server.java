@@ -11,6 +11,7 @@ import org.jboss.logging.Logger;
 
 import play.Game;
 import play.Lobby;
+import test.ClientApp;
 
 public class Server {
 
@@ -20,6 +21,7 @@ public class Server {
 	protected Socket clientSocket;
 	protected boolean isRunning;
 	private Lobby lobby = new Lobby();
+	private JoinGameHandler joinGameHandler;
 	
 	private Server(){}
 
@@ -41,7 +43,8 @@ public class Server {
 			try {
 				clientSocket = serverSocket.accept();
 				System.out.println("Client connected to the server");
-				lobby.addPlayerConnection(clientSocket);
+				new Thread(new JoinGameHandler(clientSocket)).start();;
+				//lobby.addPlayerConnection(clientSocket);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
