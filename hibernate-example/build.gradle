@@ -1,0 +1,14 @@
+apply plugin: 'java-library'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+	implementation 'org.hibernate:hibernate-core:5.2.11.Final'
+	implementation 'com.zsoltfabok:sqlite-dialect:1.0'
+	implementation 'org.xerial:sqlite-jdbc:3.7.2'
+	testImplementation 'junit:junit:4.12'
+}
+
