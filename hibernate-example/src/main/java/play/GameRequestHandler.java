@@ -26,8 +26,8 @@ public class GameRequestHandler implements Runnable{
 	@Override
 	public void run() {
 		
-		sendToClient(MessageFactory.gameStart(),p1);
-		sendToClient(MessageFactory.gameStart(),p2);
+		sendToClient(MessageFactory.getMessage("gamestart"),p1);
+		sendToClient(MessageFactory.getMessage("gamestart"),p2);
 			
 			
 		String s;

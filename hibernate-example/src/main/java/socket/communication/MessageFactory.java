@@ -2,14 +2,20 @@ package socket.communication;
 
 public class MessageFactory {
 
-	public static XMLMessage clientIsRdy(){
+	
+	public static XMLMessage getMessage(String s) {
+		
+	}
+	
+	
+	public static XMLMessage clientisrdy(){
 		XMLMessage m = new XMLMessage();
 		m.setType(MsgType.SIMPLE);
 		m.setDesc("READY");
 		return m;
 	}
 	
-	public static XMLMessage gameStart(){
+	public static XMLMessage gamestart(){
 		XMLMessage m = new XMLMessage();
 		m.setType(MsgType.SIMPLE);
 		m.setDesc("START");
