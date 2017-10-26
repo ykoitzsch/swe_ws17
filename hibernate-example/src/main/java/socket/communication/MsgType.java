@@ -1,5 +1,5 @@
 package socket.communication;
 
 public enum MsgType {
-	SIMPLE, COMPLEX, ERROR
+	TEXT, JOIN, START, GENMAP
 }

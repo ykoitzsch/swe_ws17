@@ -20,8 +20,6 @@ public class Server {
 	public ServerSocket serverSocket;
 	protected Socket clientSocket;
 	protected boolean isRunning;
-	private Lobby lobby = new Lobby();
-	private JoinGameHandler joinGameHandler;
 	
 	private Server(){}
 
@@ -42,9 +40,8 @@ public class Server {
 		while(isRunning){
 			try {
 				clientSocket = serverSocket.accept();
-				System.out.println("Client connected to the server");
-				new Thread(new JoinGameHandler(clientSocket)).start();;
-				//lobby.addPlayerConnection(clientSocket);
+				System.out.println(clientSocket + " connected to the server");
+				new Thread(new JoinGameHandler(clientSocket)).start();
 				
 			} catch (IOException e) {
 				e.printStackTrace();

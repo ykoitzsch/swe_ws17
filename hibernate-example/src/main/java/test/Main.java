@@ -10,8 +10,9 @@ public class Main {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		new Thread(()->{ClientApp.start();}).start();
-		new Thread(()->{ClientApp.start();}).start();		
+		new Thread(()->{ClientApp.start("test");}).start();
+		new Thread(()->{ClientApp.start("test");}).start();		
+		
 
 				 
 	}

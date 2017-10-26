@@ -26,23 +26,31 @@ public class Client {
 	private String host;
 	private BufferedReader reader;
 	private PrintWriter writer;
-	private final String XMLEnd = "</xmlMessage>";
+	private boolean connected;
+	private boolean ingame;
 	
 	public Client(int port){
 		this.port = port;
+		this.connected = false;
 	}
 	
 	public void connect(){
 			try {
 				socket = new Socket(host,port);
+				connected = true;
 				this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				this.writer = new PrintWriter(socket.getOutputStream(),true);
-				receiveMessages();
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+	}
+	
+	public void join(String gamename){
+		if(connected) {
+			sendToServer(MessageFactory.join(gamename));
+		} 
 	}
 	
 	public void receiveMessages(){
@@ -56,7 +64,7 @@ public class Client {
 		
 			while((xml = reader.readLine()) != null){
 				sb.append(xml);
-				if(xml.endsWith(XMLEnd)){
+				if(xml.endsWith(XMLMessage.msgEnd)){
 					msg = (XMLMessage) um.unmarshal(new StreamSource(new StringReader(sb.toString())));
 					sb.setLength(0);
 					check(msg);
@@ -71,14 +79,15 @@ public class Client {
 	}
 	
 	public void check(XMLMessage m){
-		if(m.getType() == MsgType.SIMPLE){
-			if(m.getDesc().equals("START")){ //kann man dann mit hashmap lösen
-				sendToServer(MessageFactory.clientIsRdy());
-			}	
+		if(m.getType() == MsgType.START){
+			System.out.println(socket.toString() + ": Spielstart");
+			sendToServer(MessageFactory.clientisrdy());	
 		}
-		else if(m.getType() == MsgType.COMPLEX){
-			
+		if(m.getType() == MsgType.JOIN){
+			System.out.println(socket.toString() + ": Gegner hat die Verbindung beendet.");
+			join("");
 		}
+
 	}
 	
 	public void sendToServer(XMLMessage xml){
@@ -91,4 +100,21 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+
+	public boolean isIngame() {
+		return ingame;
+	}
+
+	public void setIngame(boolean ingame) {
+		this.ingame = ingame;
+	}
+	
 }

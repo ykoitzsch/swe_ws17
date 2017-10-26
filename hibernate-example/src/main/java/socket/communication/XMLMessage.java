@@ -12,7 +12,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement()
 public class XMLMessage {
-		
+	
+	public static String msgEnd = "</xmlMessage>";
 	private MsgType type;
 	private String desc;
 	private List<?> sendable = new ArrayList<Object>();

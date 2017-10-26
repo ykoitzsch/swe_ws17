@@ -2,6 +2,7 @@ package play;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -13,29 +14,42 @@ public class Lobby {
 
 	private PlayerConnection player1;
 	private PlayerConnection player2;
+	private HashMap<String, PlayerConnection> queue = new HashMap<String, PlayerConnection>();
 	
 	private int playerCount = 0;
-	private ExecutorService threadPool;
+	private ExecutorService threadPool = Executors.newCachedThreadPool();
 	private GameRequestHandler gameHandler;
 	private int gameCount = 0;
+	private static Lobby lobbyInstance = new Lobby();
 		
-	public Lobby(){
-		this.threadPool = Executors.newCachedThreadPool();
+	private Lobby(){}
+	
+	public static Lobby getLobbyInstance(){
+		return lobbyInstance;
 	}
 	
-	public void addPlayerConnection(Socket socket){
+	public synchronized void addPlayerConnection(Socket socket){
 		if(playerCount++ == 0){
 			player1 = new PlayerConnection(socket);
-			System.out.println(socket + " has joined the lobby");
-			System.out.println(socket + " is waiting for another player");
 		}
 		else{ 
 			player2 = new PlayerConnection(socket);
-			gameHandler = new GameRequestHandler(player1, player2, gameCount++);
+			startNewGame(player1, player2, gameCount++);
 			playerCount = 0;
-			
-			System.out.println(socket + " is the second player. Match starts now...");
-			threadPool.execute(gameHandler);
 		}
+	}
+	
+	public synchronized void addPlayerConnection(Socket socket, String gamename) {
+		if(queue.containsKey(gamename)) {
+			startNewGame(queue.get(gamename),new PlayerConnection(socket),gameCount++);
+		}
+		else {
+			queue.put(gamename, new PlayerConnection(socket));
+		}
+	}
+	
+	public synchronized void startNewGame(PlayerConnection p1, PlayerConnection p2, int gameID) {
+		gameHandler = new GameRequestHandler(p1, p2, gameID);
+		threadPool.execute(gameHandler);
 	}
 }
