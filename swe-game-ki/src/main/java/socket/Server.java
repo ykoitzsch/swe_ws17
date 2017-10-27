@@ -15,7 +15,7 @@ import test.ClientApp;
 
 public class Server {
 
-	private final int PORT = 2222;
+	private final int PORT = 3333;
 	private static Server server = new Server();
 	public ServerSocket serverSocket;
 	protected Socket clientSocket;

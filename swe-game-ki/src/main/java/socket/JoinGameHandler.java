@@ -21,13 +21,12 @@ public class JoinGameHandler implements Runnable{
 
 	private BufferedReader reader;
 	private Socket socket;
-	boolean active;
+	boolean active = true;
 	
 	public JoinGameHandler(Socket clientSocket) {
 		try {
 			this.reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			this.socket = clientSocket;
-			active = true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,28 +34,28 @@ public class JoinGameHandler implements Runnable{
 
 	@Override
 	public void run() {
-		while(Server.getServerInstance().getIsRunning() && active) {
+		try {	
 			JAXBContext context;
-			try {
-				context = JAXBContext.newInstance(XMLMessage.class);
-				Unmarshaller um = context.createUnmarshaller();
-				XMLMessage msg;
-				String xml = "";
-				StringBuilder sb = new StringBuilder();
-			
-				while((xml = reader.readLine()) != null){
+			context = JAXBContext.newInstance(XMLMessage.class);
+			Unmarshaller um = context.createUnmarshaller();
+			XMLMessage msg;
+			String xml = "";
+			StringBuilder sb = new StringBuilder();
+			while(active) {
+				if((xml = reader.readLine()) != null){
 					sb.append(xml);
-					if(xml.endsWith(XMLMessage.msgEnd)){
-						msg = (XMLMessage) um.unmarshal(new StreamSource(new StringReader(sb.toString())));
-						sb.setLength(0);
-						check(msg);
-					}		
-				}
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+						if(xml.endsWith(XMLMessage.msgEnd)){
+							active = false;
+							msg = (XMLMessage) um.unmarshal(new StreamSource(new StringReader(sb.toString())));
+							sb.setLength(0);
+							check(msg);
+						}		
+				}		
 			}
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -65,11 +64,13 @@ public class JoinGameHandler implements Runnable{
 			Lobby lobby = Lobby.getLobbyInstance();
 			if(m.getDesc().isEmpty()) {
 				lobby.addPlayerConnection(socket);
-				active = false;
+				this.reader = null;
+				this.socket = null;
 			}
 			else {
 				lobby.addPlayerConnection(socket, m.getDesc());
-				active = false;
+				this.reader = null;
+				this.socket = null;
 			}		
 		}
 	}

@@ -35,9 +35,9 @@ public class GameRequestHandler implements Runnable{
 		if(!ready()) {
 			return;
 		} 
-		System.out.println("hellou");
-		sendToClient(MessageFactory.generateMap(),p1);
-		sendToClient(MessageFactory.generateMap(),p2);
+		
+		//sendToClient(MessageFactory.generateMap(),p1);
+		//sendToClient(MessageFactory.generateMap(),p2);
 
 			
 		
@@ -56,29 +56,13 @@ public class GameRequestHandler implements Runnable{
 		}
 	}
 	
-	private boolean ready() {	
-		StringBuilder sb = new StringBuilder();
-		String xml;
+	private boolean ready() {
 		try {
-			if((xml = p1.reader.readLine()) != null) {
-				sb.append(xml);
-				if(xml.endsWith(XMLMessage.msgEnd)){
-					System.out.println("debug2");
-				}
-					//sendToClient(MessageFactory.rejoin(),p2);
-					//return false;
-			}
-			System.out.println("debug");
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		
-		try {
-			if((p2.reader.readLine()) == null) {
-				//sendToClient(MessageFactory.rejoin(),p1);
-				return false;
-			}
+			if((p1.reader.readLine()) != null){
+			}else return false;
+			
+			if((p2.reader.readLine()) != null){
+			} else return false;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
