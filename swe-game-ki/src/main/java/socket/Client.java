@@ -1,13 +1,14 @@
 package socket;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.UUID;
+import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -17,6 +18,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import socket.communication.MessageFactory;
 import socket.communication.MsgType;
+import socket.communication.Test;
 import socket.communication.XMLMessage;
 
 public class Client {
@@ -49,7 +51,16 @@ public class Client {
 	
 	public void join(String gamename){
 		if(connected) {
-			sendToServer(MessageFactory.join(gamename));
+			XMLMessage msg = new XMLMessage();
+			msg.setType(MsgType.JOIN);
+			msg.setDesc("Description");
+			String l[] = new String[] {"W","W","G","G","W","W","G","G","W","W","G","G","W","W","G","G","W","W","G","G"};
+			
+			Test t = new Test(l);
+			msg.setSendable(t);
+			sendToServer(msg);
+			
+			//sendToServer(MessageFactory.join(gamename));
 		} 
 	}
 	
@@ -81,7 +92,7 @@ public class Client {
 	public void check(XMLMessage m){
 		if(m.getType() == MsgType.START){
 			System.out.println(socket.toString() + ": Spielstart");
-			sendToServer(MessageFactory.clientisrdy());	
+			sendToServer(MessageFactory.clientisrdy());		
 		}
 		if(m.getType() == MsgType.JOIN){
 			System.out.println(socket.toString() + ": Gegner hat die Verbindung beendet.");
@@ -92,10 +103,11 @@ public class Client {
 	
 	public void sendToServer(XMLMessage xml){
 		try {
-			JAXBContext context = JAXBContext.newInstance(XMLMessage.class);
+			JAXBContext context = JAXBContext.newInstance(Test.class, XMLMessage.class);
 			Marshaller m = context.createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			m.marshal(xml, writer);
+			//m.marshal(xml, writer);
+			m.marshal(xml, new File("TEst.xml"));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

@@ -18,7 +18,7 @@ public class Lobby {
 	
 	private int playerCount = 0;
 	private ExecutorService threadPool = Executors.newCachedThreadPool();
-	private GameRequestHandler gameHandler;
+	private GameManager gameHandler;
 	private int gameCount = 0;
 	private static Lobby lobbyInstance = new Lobby();
 		
@@ -49,7 +49,7 @@ public class Lobby {
 	}
 	
 	public synchronized void startNewGame(PlayerConnection p1, PlayerConnection p2, int gameID) {
-		gameHandler = new GameRequestHandler(p1, p2, gameID);
+		gameHandler = new GameManager(p1, p2, gameID);
 		threadPool.execute(gameHandler);
 	}
 }

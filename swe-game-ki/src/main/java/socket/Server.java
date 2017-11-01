@@ -3,15 +3,9 @@ package socket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.jboss.logging.Logger;
-
-import play.Game;
-import play.Lobby;
-import test.ClientApp;
 
 public class Server {
 
@@ -20,6 +14,7 @@ public class Server {
 	public ServerSocket serverSocket;
 	protected Socket clientSocket;
 	protected boolean isRunning;
+	private static final Logger logger = Logger.getLogger(Server.class.getName());
 	
 	private Server(){}
 
@@ -31,6 +26,7 @@ public class Server {
 		this.isRunning = true;
 		try{
 			serverSocket = new ServerSocket(PORT);
+			logger.log(Level.FINE, "test");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -42,6 +38,7 @@ public class Server {
 				clientSocket = serverSocket.accept();
 				System.out.println(clientSocket + " connected to the server");
 				new Thread(new JoinGameHandler(clientSocket)).start();
+				
 				
 			} catch (IOException e) {
 				e.printStackTrace();

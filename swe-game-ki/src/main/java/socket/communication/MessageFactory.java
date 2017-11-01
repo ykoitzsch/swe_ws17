@@ -42,4 +42,11 @@ public class MessageFactory {
 		m.setType(MsgType.TEXT);
 		return m;
 	}
+	
+	public static XMLMessage test() {
+		XMLMessage m = new XMLMessage();
+		String s = "hallo";
+		m.setSendable(s);
+		return m;
+	}
 }

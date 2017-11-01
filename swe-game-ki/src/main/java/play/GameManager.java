@@ -1,7 +1,6 @@
 package play;
 
 import java.io.IOException;
-import java.io.StringReader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -13,14 +12,14 @@ import socket.PlayerConnection;
 import socket.communication.MessageFactory;
 import socket.communication.XMLMessage;
 
-public class GameRequestHandler implements Runnable{
+public class GameManager implements Runnable{
 	
 	private PlayerConnection p1;
 	private PlayerConnection p2;
 	private Game game;
 	private int id;
 	
-	public GameRequestHandler(PlayerConnection p1, PlayerConnection p2, int id){
+	public GameManager(PlayerConnection p1, PlayerConnection p2, int id){
 		this.p1 = p1;
 		this.p2 = p2;
 		this.id = id;
@@ -35,7 +34,6 @@ public class GameRequestHandler implements Runnable{
 		if(!ready()) {
 			return;
 		} 
-		
 		//sendToClient(MessageFactory.generateMap(),p1);
 		//sendToClient(MessageFactory.generateMap(),p2);
 

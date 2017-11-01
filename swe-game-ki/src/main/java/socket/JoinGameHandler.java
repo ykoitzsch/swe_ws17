@@ -8,12 +8,10 @@ import java.net.Socket;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
 import play.Lobby;
-import socket.communication.MessageFactory;
 import socket.communication.MsgType;
 import socket.communication.XMLMessage;
 
