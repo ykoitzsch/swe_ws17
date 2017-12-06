@@ -2,12 +2,12 @@ package play;
 
 public class Game{
 	
-	private enum GameState {START, X, Y};
+	enum GameState {PREPARE, MAPX, PLAY, OVER};
 	private GameState gameState;
 	private int id;
 	
-	public Game(int id) {
-		gameState = GameState.START;
+	Game(int id) {
+		gameState = GameState.PREPARE;
 		this.id = id;
 	}
 

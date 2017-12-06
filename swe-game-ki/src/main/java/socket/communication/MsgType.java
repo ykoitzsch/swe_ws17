@@ -1,5 +1,17 @@
 package socket.communication;
 
 public enum MsgType {
-	TEXT, JOIN, START, GENMAP
+	JOIN,
+	ACC,
+	RDY,
+	MAP,
+	GENMAP,
+	FORTPOS,
+	FORT,
+	MOVE,
+	XMAP,
+	BRIBE,
+	CHEST,
+	DEFEAT,
+	VICTORY
 }

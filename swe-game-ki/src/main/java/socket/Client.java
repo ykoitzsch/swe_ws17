@@ -15,6 +15,9 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
+import org.jboss.logging.Logger;
+
+import play.World;
 import socket.communication.MessageFactory;
 import socket.communication.MsgType;
 import socket.communication.XMLMessage;
@@ -79,13 +82,15 @@ public class Client {
 	}
 	
 	public void check(XMLMessage m){
-		if(m.getType() == MsgType.START){
-			System.out.println(socket.toString() + ": Spielstart");
+		if(m.getType() == MsgType.RDY){
 			sendToServer(MessageFactory.clientisrdy());	
 		}
 		if(m.getType() == MsgType.JOIN){
 			System.out.println(socket.toString() + ": Gegner hat die Verbindung beendet.");
 			join("");
+		}
+		if(m.getType() == MsgType.GENMAP){
+			sendToServer(MessageFactory.sendMap());
 		}
 
 	}
@@ -117,4 +122,7 @@ public class Client {
 		this.ingame = ingame;
 	}
 	
+	public World generateMap() {
+		return null;
+	}
 }

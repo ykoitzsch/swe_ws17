@@ -6,14 +6,14 @@ public class MessageFactory {
 	//Server --> Client -----------------------------------------------------------------
 	public static XMLMessage gamestart(String info){
 		XMLMessage m = new XMLMessage();
-		m.setType(MsgType.START);
+		m.setType(MsgType.RDY);
 		m.setDesc(info);
 		return m;
 	}
 	
 	public static XMLMessage gamestart(){
 		XMLMessage m = new XMLMessage();
-		m.setType(MsgType.START);
+		m.setType(MsgType.RDY);
 		return m;
 	}
 	
@@ -39,7 +39,14 @@ public class MessageFactory {
 	
 	public static XMLMessage clientisrdy(){
 		XMLMessage m = new XMLMessage();
-		m.setType(MsgType.TEXT);
+		m.setType(MsgType.RDY);
 		return m;
 	}
+	
+	public static XMLMessage sendMap(){
+		XMLMessage m = new XMLMessage();
+		m.setType(MsgType.MAP);
+		return m;
+	}
+
 }
