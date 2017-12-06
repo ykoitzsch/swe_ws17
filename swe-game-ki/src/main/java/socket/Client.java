@@ -17,7 +17,9 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.jboss.logging.Logger;
 
-import play.World;
+import play.map.Tile;
+import play.map.World;
+import play.map.World.TileType;
 import socket.communication.MessageFactory;
 import socket.communication.MsgType;
 import socket.communication.XMLMessage;
@@ -90,7 +92,7 @@ public class Client {
 			join("");
 		}
 		if(m.getType() == MsgType.GENMAP){
-			sendToServer(MessageFactory.sendMap());
+			sendToServer(MessageFactory.sendMap(generateMap()));
 		}
 
 	}
@@ -122,7 +124,19 @@ public class Client {
 		this.ingame = ingame;
 	}
 	
-	public World generateMap() {
-		return null;
+	public Tile[][] generateMap() {
+		Tile[][] tiles = new Tile[8][4];
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 4; j++) {
+				tiles[i][j] = new Tile(i,j, TileType.EMPTY);
+			}
+		}
+		
+		tiles[0][0].setType(TileType.WATER);
+		tiles[1][0].setType(TileType.WATER);
+		tiles[2][0].setType(TileType.WATER);
+		tiles[3][0].setType(TileType.WATER);
+		tiles[0][1].setType(TileType.WATER);
+		return tiles;
 	}
 }

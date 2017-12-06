@@ -2,8 +2,8 @@ package play;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
@@ -13,6 +13,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
 import play.Game.GameState;
+import play.map.Tile;
+import play.map.World.TileType;
 import socket.PlayerConnection;
 import socket.communication.MessageFactory;
 import socket.communication.MsgType;
@@ -71,9 +73,10 @@ public class GameRequestHandler implements Runnable{
 		
 			while((xml = activePlayer.reader.readLine()) != null){
 				sb.append(xml);
+				System.out.println(xml);
+				
 				if(xml.endsWith(XMLMessage.msgEnd)){
 					msg = (XMLMessage) um.unmarshal(new StreamSource(new StringReader(sb.toString())));
-
 					sb.setLength(0);
 					// ---- //
 					checkTime();
@@ -139,7 +142,7 @@ public class GameRequestHandler implements Runnable{
 			
 			if(msg.getType() == MsgType.MAP) {
 				System.out.println(activePlayer.getTempName() + " sent map");
-				validateMap(msg.getSendable());
+				validateMap(msg.getTiles());
 			}	
 		}
 		else {
@@ -147,7 +150,79 @@ public class GameRequestHandler implements Runnable{
 		}
 	}
 	
-	public void validateMap(List<?> list) {
+	public void validateMap(Tile[][] tiles) {
+		//check Size
+		if(!(tiles.length == 8)) {
+			System.out.println("Expected width: 8 but was: " + tiles[0].length);
+		}
+		if(!(tiles[0].length == 4)) {
+			System.out.println("Expected height: 4 but was: " + tiles[1].length);
+		}
+		ArrayList<Tile> tileList = new ArrayList<Tile>();
+		for(int i = 0; i < tiles.length; i++) {
+			for(int j = 0; j < tiles[0].length; j++) {
+				tileList.add(tiles[i][j]);
+			}
+		}
+		
+		//check at least 3 mountain, 5 grass, 4 water
+		long count;
+		count = tileList.stream().filter(f -> f.getType() == TileType.GRASS).count();
+		if(count < 5) {
+			System.out.println("Not enough Grass Tiles! Counted: " + count);
+		}
+		count = tileList.stream().filter(f -> f.getType() == TileType.STONE).count();
+		if(count < 3) {
+			System.out.println("Not enough Stone Tiles! Counted: " + count);
+		}
+		count = tileList.stream().filter(f -> f.getType() == TileType.WATER).count();
+		if(count < 4) {
+			System.out.println("Not enough Water Tiles! Counted: " + count);
+		}
+		count = tileList.stream().filter(f -> f.getType() == TileType.EMPTY).count();
+		if(count > 0) {
+			System.out.println("Empty Fields counted: " + count);
+		}
+		
+		//water on the border check
+		int waterCount = 0;
+		for(int i = 0; i < 7; i++) {
+			if(tiles[i][0].getType() == TileType.WATER) {
+				 waterCount++;
+				 if(waterCount > 3) {
+					 System.out.println("Too many Water Tiles on the merge border! Counted: "+waterCount);
+				 }
+			}	
+		}
+		waterCount = 0;
+		for(int i = 0; i < 7; i++) {
+			if(tiles[i][3].getType() == TileType.WATER) {
+				 waterCount++;
+				 if(waterCount > 3) {
+					 System.out.println("Too many Water Tiles on the merge border! Counted: "+waterCount);
+				 }
+			}
+		}
+		waterCount = 0;
+		for(int i = 0; i < 3; i++) {
+			if(tiles[0][i].getType() == TileType.WATER) {
+				 waterCount++;
+				 if(waterCount > 1) {
+					 System.out.println("Too many Water Tiles on the side border! Counted: "+waterCount);
+				 }
+			}
+		}
+		waterCount = 0;
+		for(int i = 0; i < 3; i++) {
+			if(tiles[7][i].getType() == TileType.WATER) {
+				 waterCount++;
+				 if(waterCount > 1) {
+					 System.out.println("Too many Water Tiles on the side border! Counted: "+waterCount);
+				 }
+			}
+		}
+		
+
 		
 	}
 

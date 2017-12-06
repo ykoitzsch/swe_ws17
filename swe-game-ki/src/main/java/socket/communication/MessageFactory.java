@@ -1,5 +1,6 @@
 package socket.communication;
 
+import play.map.Tile;
 
 public class MessageFactory {
 	
@@ -43,9 +44,10 @@ public class MessageFactory {
 		return m;
 	}
 	
-	public static XMLMessage sendMap(){
+	public static XMLMessage sendMap(Tile[][] tiles){
 		XMLMessage m = new XMLMessage();
 		m.setType(MsgType.MAP);
+		m.setTiles(tiles);
 		return m;
 	}
 
