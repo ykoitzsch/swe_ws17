@@ -5,7 +5,9 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -36,7 +38,9 @@ public class GameRequestHandler implements Runnable{
 	IRepository<GameLog> gamelogRep = RepositoryFactory.getRepository(GameLog.class);
 	IRepository<Game> gameRep = RepositoryFactory.getRepository(Game.class);
 	int steps = 0;
-
+	private static Logger LOGGER = Logger.getLogger(GameRequestHandler.class.getName());
+	static private FileHandler fileTxt;
+    static private SimpleFormatter formatterTxt;
 	
 	public GameRequestHandler(PlayerConnection p1, PlayerConnection p2, int id){
 		this.p1 = p1;
@@ -49,12 +53,24 @@ public class GameRequestHandler implements Runnable{
 		expectedCommand.put(GameState.MAPX2, MsgType.MOVE);
 		expectedCommand.put(GameState.PLAY, MsgType.MOVE);
 		game = new Game(id);
-		
+		try {
+			fileTxt = new FileHandler("Logs.txt");
+			formatterTxt = new SimpleFormatter();
+	        fileTxt.setFormatter(formatterTxt);
+	        LOGGER.addHandler(fileTxt);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void run() {	
 			System.out.println("---------------------GameState.PREPARE---------------------");
+			LOGGER.info("game started");
 			sendToClient(MessageFactory.gamestart(),activePlayer);
 			listen();
 			
@@ -88,8 +104,11 @@ public class GameRequestHandler implements Runnable{
 					sb.setLength(0);
 					// ---- //
 					checkTime();
+					LOGGER.info("received message from " + activePlayer);
+					LOGGER.info("inspecting message with type " + msg.getType());
 					inspectMessage(msg);
 					toggleActivePlayer();
+					LOGGER.info("notify player");
 					notifyPlayer();
 				}		
 			}
@@ -111,10 +130,12 @@ public class GameRequestHandler implements Runnable{
 	
 	private void toggleActivePlayer() {
 		if(activePlayer == p1) {
+			LOGGER.info("Active player was p1, now its p2 turn");
 			activePlayer = p2;
 		}
 		else {
 			activePlayer = p1;
+			LOGGER.info("Active player was p2, now its p1 turn");
 			updateGameState();
 		}
 		System.out.println("It's " + activePlayer.getTempName() + " turn");
@@ -178,6 +199,7 @@ public class GameRequestHandler implements Runnable{
 			}		
 		}
 		else {
+			LOGGER.warning("received message from " + activePlayer + " with wrong message type: " + msg.getType() + " expected: " + expectedCommand.get(game.getGameState()));
 			System.out.println("ERROR: Wrong Message Type. Received: "+msg.getType() +" Expected: "+game.getGameState());
 			sendToClient(MessageFactory.defeat(),activePlayer);
 			toggleActivePlayer();
