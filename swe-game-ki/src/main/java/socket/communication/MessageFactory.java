@@ -30,6 +30,37 @@ public class MessageFactory {
 		return m;
 	}
 	
+	public static XMLMessage sendCompletelMap(Tile[][] tiles){
+		XMLMessage m = new XMLMessage();
+		m.setType(MsgType.XMAP);
+		m.setTiles(tiles);
+		return m;
+	}
+	
+	public static XMLMessage move(){
+		XMLMessage m = new XMLMessage();
+		m.setType(MsgType.MOVE);
+		return m;
+	}
+	
+	public static XMLMessage defeat(){
+		XMLMessage m = new XMLMessage();
+		m.setType(MsgType.DEFEAT);
+		return m;
+	}
+	
+	public static XMLMessage victory(){
+		XMLMessage m = new XMLMessage();
+		m.setType(MsgType.VICTORY);
+		return m;
+	}
+	
+	public static XMLMessage foundChest(){
+		XMLMessage m = new XMLMessage();
+		m.setType(MsgType.CHEST);
+		return m;
+	}
+	
 	// Client --> Server ----------------------------------------------------------------
 	public static XMLMessage join(String gamename){
 		XMLMessage m = new XMLMessage();

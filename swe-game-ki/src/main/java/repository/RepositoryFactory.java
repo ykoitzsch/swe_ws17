@@ -3,15 +3,18 @@ package repository;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.Person;
-import repository.concrete.PersonRepository;
+import play.Game;
+import play.GameLog;
+import repository.concrete.GameLogRepository;
+import repository.concrete.GameRepository;
 
 public class RepositoryFactory {
 
 	private static final Map<Class, IRepository> CLASSMAP = new HashMap<>();
 	
 	static{
-		CLASSMAP.put(Person.class, new PersonRepository());
+		CLASSMAP.put(Game.class, new GameRepository());
+		CLASSMAP.put(GameLog.class, new GameLogRepository());
 	}
 	
 	public static IRepository getRepository(Class model){

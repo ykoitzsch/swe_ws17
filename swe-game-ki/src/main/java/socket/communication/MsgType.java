@@ -13,5 +13,5 @@ public enum MsgType {
 	BRIBE,
 	CHEST,
 	DEFEAT,
-	VICTORY
+	VICTORY,
 }
