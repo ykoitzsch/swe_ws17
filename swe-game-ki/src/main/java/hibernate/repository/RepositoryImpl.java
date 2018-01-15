@@ -1,4 +1,4 @@
-package repository;
+package hibernate.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import org.jboss.logging.Logger;
 import org.jboss.logging.Logger.Level;
 
 import hibernate.HibernateUtil;
-import model.Model;
+import hibernate.model.Model;
 
 
 public class RepositoryImpl<T extends Model> implements IRepository<T>{

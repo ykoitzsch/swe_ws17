@@ -1,4 +1,4 @@
-package model;
+package hibernate.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlTransient;

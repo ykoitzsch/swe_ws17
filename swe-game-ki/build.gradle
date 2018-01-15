@@ -6,9 +6,9 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.hibernate:hibernate-core:5.2.11.Final'
-	implementation 'com.zsoltfabok:sqlite-dialect:1.0'
+	implementation 'org.hibernate:hibernate-core:5.2.12.Final'
 	implementation 'org.xerial:sqlite-jdbc:3.7.2'
+	compile group: 'com.zsoltfabok', name: 'sqlite-dialect', version: '1.0'
 	testImplementation 'junit:junit:4.12'
 }
 

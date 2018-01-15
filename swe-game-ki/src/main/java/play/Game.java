@@ -1,94 +1,63 @@
 package play;
 
-import java.util.ArrayList;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import model.Model;
 import play.map.World;
+import socket.PlayerConnection;
 
-@Entity
-@Table(name="game")
-public class Game extends Model{
-	enum GameState {PREPARE, MAPX1, MAPX2, PLAY, OVER};
+public class Game{
 
-	@GeneratedValue
-	@Id
-	private int game_id;
-	@Transient
-	private GameState gameState;
-	
-	@Transient
+	private int id;
 	private World world;
-	
-	private String gamename;
-	private String winner;
-	private String loser;
-	private ArrayList<GameLog> logs;
+	private PlayerConnection winner, loser;
+	private boolean draw;
+	private boolean p1HasChest;
+	private boolean p2HasChest;
 
-
-
-	Game(){}
-	public Game(int gID) {
-		gameState = GameState.PREPARE;
-		this.world = new World(8,8);
-		gamename = "Game "+gID;
+	Game(int id){
+		this.world = new World();
+		this.id = id;
 	}
-
-	public GameState getGameState() {
-		return gameState;
+	public int getId() {
+		return id;
 	}
-
-	public void setGameState(GameState gameState) {
-		this.gameState = gameState;
+	public void setId(int id) {
+		this.id = id;
 	}
-
 	public World getWorld() {
 		return world;
 	}
-
 	public void setWorld(World world) {
 		this.world = world;
 	}
-
-	@Override
-	public int getId() {
-		return game_id;
-	}
-	public String getWinner() {
+	public PlayerConnection getWinner() {
 		return winner;
 	}
-	public void setWinner(String winner) {
+	public void setWinner(PlayerConnection winner) {
 		this.winner = winner;
 	}
-	public String getLoser() {
+	public PlayerConnection getLoser() {
 		return loser;
 	}
-	public void setLoser(String loser) {
+	public void setLoser(PlayerConnection loser) {
 		this.loser = loser;
 	}
-	public ArrayList<GameLog> getLogs() {
-		return logs;
+	public boolean isDraw() {
+		return draw;
 	}
-	public void setLogs(ArrayList<GameLog> logs) {
-		this.logs = logs;
+	public void setDraw(boolean draw) {
+		this.draw = draw;
 	}
-
-	public GameLog getLog(int id) {
-		for(GameLog l : logs) {
-			if(l.getId() == id) {
-				return l;
-			}
-		}
-		return null;
+	public boolean isP1HasChest() {
+		return p1HasChest;
+	}
+	public void setP1HasChest(boolean p1HasChest) {
+		this.p1HasChest = p1HasChest;
+	}
+	public boolean isP2HasChest() {
+		return p2HasChest;
+	}
+	public void setP2HasChest(boolean p2HasChest) {
+		this.p2HasChest = p2HasChest;
 	}
 	
 	
-
 }

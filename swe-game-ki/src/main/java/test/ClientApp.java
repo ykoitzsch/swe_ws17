@@ -10,9 +10,7 @@ public class ClientApp {
 
 		Client c = new Client(Server.getServerInstance().getPort());
 		c.connect();
-		if(c.isConnected()) {
-			c.join(gamename);
-			c.receiveMessages();
-		}
+		c.join(gamename);
+		c.receiveMessages();
 	}
 }

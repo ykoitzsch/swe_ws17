@@ -1,6 +1,5 @@
 package test;
 
-
 public class Main {
 
 	public static void main(String args[]){	
@@ -11,9 +10,9 @@ public class Main {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		new Thread(()->{ClientApp.start("test");}).start();
-		new Thread(()->{ClientApp.start("test");}).start();		
-			 
+		new Thread(()->{ClientApp.start("test");}).start();				
 	}
 }
 

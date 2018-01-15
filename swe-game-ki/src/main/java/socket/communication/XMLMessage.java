@@ -5,7 +5,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import play.map.Tile;
+import play.map.Coordinate;
+import play.map.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement()
@@ -14,9 +15,8 @@ public class XMLMessage {
 	public static String msgEnd = "</xmlMessage>";
 	private MsgType type;
 	private String desc;
-	//private List<?> sendable = new ArrayList<Object>();
-	//private World world;
-	private Tile[][] tiles;
+	private Map map;
+	private Coordinate coordinate;
 	
 	public MsgType getType() {
 		return type;
@@ -24,34 +24,22 @@ public class XMLMessage {
 	public void setType(MsgType type) {
 		this.type = type;
 	}
-//	public List<?> getSendable() {
-//		return sendable;
-//	}
-//	public void setSendable(List<?> sendable) {
-//		this.sendable = sendable;
-//	}
 	public String getDesc() {
 		return desc;
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public Tile[][] getTiles() {
-		return tiles;
+	public Map getMap() {
+		return map;
 	}
-	public void setTiles(Tile[][] tiles) {
-		this.tiles = tiles;
+	public void setMap(Map map) {
+		this.map = map;
 	}
-	
-	
-//	public World getWorld() {
-//		return world;
-//	}
-//	public void setWorld(World world) {
-//		this.world = world;
-//	}
-	
-	
-	
-
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
+	}
 }
