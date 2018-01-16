@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xmlMessage>
+    <type>JOIN</type>
+    <desc>Description</desc>
+    <sendable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="test">
+        <tiles>W</tiles>
+        <tiles>W</tiles>
+        <tiles>G</tiles>
+        <tiles>G</tiles>
+        <tiles>W</tiles>
+        <tiles>W</tiles>
+        <tiles>G</tiles>
+        <tiles>G</tiles>
+        <tiles>W</tiles>
+        <tiles>W</tiles>
+        <tiles>G</tiles>
+        <tiles>G</tiles>
+        <tiles>W</tiles>
+        <tiles>W</tiles>
+        <tiles>G</tiles>
+        <tiles>G</tiles>
+        <tiles>W</tiles>
+        <tiles>W</tiles>
+        <tiles>G</tiles>
+        <tiles>G</tiles>
+    </sendable>
+</xmlMessage>
