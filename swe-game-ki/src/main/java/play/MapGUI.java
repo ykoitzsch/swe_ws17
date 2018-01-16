@@ -16,17 +16,17 @@ import play.map.World;
 
 public class MapGUI{
 	
-	ImageIcon player1 = new ImageIcon("img/player1.png");
-	ImageIcon castle1 = new ImageIcon("img/castle1.png");
-	ImageIcon chest1 = new ImageIcon("img/chest1.png");
-	ImageIcon player2 = new ImageIcon("img/player2.png");
-	ImageIcon castle2 = new ImageIcon("img/castle2.png");
-	ImageIcon chest2 = new ImageIcon("img/chest2.png");
-	ImageIcon water = new ImageIcon("img/water.png");
-	ImageIcon grass = new ImageIcon("img/grass.png");
-	ImageIcon mountain = new ImageIcon("img/mountain.png");
-	ImageIcon p1wChest = new ImageIcon("img/player1wchest.png");
-	ImageIcon p2wChest = new ImageIcon("img/player2wchest.png");
+	ImageIcon player1 = new ImageIcon("src/main/resources/player1.png");
+	ImageIcon castle1 = new ImageIcon("src/main/resources/castle1.png");
+	ImageIcon chest1 = new ImageIcon("src/main/resources/chest1.png");
+	ImageIcon player2 = new ImageIcon("src/main/resources/player2.png");
+	ImageIcon castle2 = new ImageIcon("src/main/resources/castle2.png");
+	ImageIcon chest2 = new ImageIcon("src/main/resources/chest2.png");
+	ImageIcon water = new ImageIcon("src/main/resources/water.png");
+	ImageIcon grass = new ImageIcon("src/main/resources/grass.png");
+	ImageIcon mountain = new ImageIcon("src/main/resources/mountain.png");
+	ImageIcon p1wChest = new ImageIcon("src/main/resources/player1wchest.png");
+	ImageIcon p2wChest = new ImageIcon("src/main/resources/player2wchest.png");
 
 
 	JLabel[][] cells;
