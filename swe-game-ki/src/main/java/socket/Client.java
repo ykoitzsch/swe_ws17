@@ -122,7 +122,6 @@ public class Client {
 			}
 				
 			if(cgi.isWaiting()) {
-				logger.info("["+socket.toString()+"]" + " is sitting out");
 				cgi.setWaiting(false);
 				sendToServer(MessageFactory.cs_move(cgi.getPlayerPosition()));
 			}
