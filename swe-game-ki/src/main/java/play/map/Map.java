@@ -39,7 +39,6 @@ public class Map {
 			
 		} 
 		catch(StackOverflowError e){
-			System.out.println("Try again!");
 			populate(mountain, water);
 		}	
 	}

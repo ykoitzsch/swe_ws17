@@ -33,7 +33,6 @@ public class Server {
 		while(isRunning){
 			try {
 				clientSocket = serverSocket.accept();
-				System.out.println(clientSocket + " connected to the server");
 				new Thread(new JoinGameHandler(clientSocket)).start();
 				
 			} catch (IOException e) {

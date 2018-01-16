@@ -6,8 +6,6 @@ import java.util.function.Predicate;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.jboss.logging.Logger;
-import org.jboss.logging.Logger.Level;
 
 import hibernate.HibernateUtil;
 import hibernate.model.Model;
@@ -18,7 +16,6 @@ public class RepositoryImpl<T extends Model> implements IRepository<T>{
 	private Class<T> type;
 	public RepositoryImpl(Class<T> type){
 		this.type = type;
-		Logger.getLogger(getClass().getName()).log(Level.INFO, "ClassType of sub-class is " + this.type.toString());
 	}
 	
 	private Transaction tx = null;
