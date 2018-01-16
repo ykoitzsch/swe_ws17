@@ -179,7 +179,7 @@ public class GameRequestHandler implements Runnable{
 		
 		if(msg.getType() == MsgType.MOVE) {
 			try {
-				Thread.sleep(50);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
